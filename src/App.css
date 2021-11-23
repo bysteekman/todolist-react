@@ -1,38 +1,124 @@
-.App {
-  text-align: center;
-}
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+#tasks {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+.task {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  min-height: 104px;
+  width: 424px;
+  margin-top: 16px;
+  margin-right: 16px;
+  padding: 30px;
+  border-color:white;
+  opacity: 0.60;
+  border-style:solid;
+  border-radius: 10px;
+  border-width: 4px;
+}
+.task:hover {
+  opacity: 1;
+}
+div:hover span {
+  opacity: 0.3;
+}
+div:hover span:hover {
+  opacity: 1;
+}
+input[type="checkbox"] {
+  height: 18px;
+  width: 18px;
+  cursor: pointer;
+}
+input[type="checkbox"]:checked ~ .task_status {
+  display: initial;
+  text-decoration: line-through;
+  color: grey;
+}
+.date.overdue_date {
+  color: red;
+}
+input[type="checkbox"]:checked ~ .date.overdue_date {
   color: white;
 }
-
-.App-link {
-  color: #61dafb;
+.task_description {
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  color:white;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.task_list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+.status_button {
+  margin-top: 16px;
+  background-color: black;
+  color: white;
+  border: 2px solid white;
+  font-size: 16px;
+  opacity: 0.8;
+  cursor: pointer;
+  width: 200px;
+  height: 50px;
+}
+.hide .completed_task{
+  display: none;
+}
+.status_button:hover {
+  opacity: 1;
+}
+.status_button::after {
+  margin-top: 18px;
+}
+.date {
+  color: white;
+  opacity: 0.8;
+}
+p {
+  display: flex;
+  width: 90%;
+  justify-content: space-between;
+  color:#aeff9a;
+  margin: 0;
+  padding: 5px;
+  font-weight: 900;
+  font-size: 24px;
+  text-align: left;
+}
+em {
+  font-style: normal;
+}
+span {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  height: 20px;
+  width: 20px;
+  opacity: 0;
+  transform: rotate(45deg);
+  cursor: pointer;
+}
+span::before, span::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  background-color: white;
+}
+span::before {
+  margin-top: 38%;
+  height: 20%;
+  width: 100%;
+}
+span::after {
+  margin-left: 38%;
+  height: 100%;
+  width: 20%;
 }
