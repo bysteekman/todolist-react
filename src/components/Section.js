@@ -13,6 +13,8 @@ const Section = () => {
                 Very important task, you must do it because you will be fired, this is simple task for you
                 Very important task, you must do it because you will be fired, this is simple task for you
                 Very important task, you must do it because you will be fired, this is simple task for you
+                Very important task, you must do it because you will be fired, this is simple task for you
+                Very important task, you must do it because you will be fired, this is simple task for you
             </p>
             <span></span>
         </section>

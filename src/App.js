@@ -9,7 +9,11 @@ function App() {
     <main>
       <Aside />
       <article>
-        <Section />
+        <section className="list_tasks">
+          <Section />
+          <Section />
+          <Section />
+        </section>
         <Form />
       </article>
     </main>
