@@ -13,6 +13,7 @@ ul {
   flex-direction: column;
   align-items: center;
   list-style-type: none;
+  height: 100%;
   width: 95%;
   overflow-y:scroll;
 }
