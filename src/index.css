@@ -1,11 +1,24 @@
-body {
+* {
   padding: 0;
   margin: 0;
-  background-color: black;
   font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-main, body, #root {
+body {
+  background-color: black;
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  list-style-type: none;
+  height: 100%;
+  width: 95%;
+  overflow-y:scroll;
+}
+
+body, #root {
   display: flex;
   flex-direction: column;
   align-items: center;

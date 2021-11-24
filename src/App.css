@@ -1,8 +1,68 @@
+header {
+  margin-top: 24px;
+}
 
-#tasks {
+main {
+  display: flex;
+  justify-content: center;
+  height: min-content;
+}
+
+.task_list {
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-height: 480px;
+  margin-right: 4px;
+  border: 4px solid white;
+  border-radius: 10px;
+  text-align: center;
+}
+
+article {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  border: 4px solid white;
+  margin-top: 4px;
+  border-radius: 10px;
+  padding: 0 8px;
+  min-height: 120px;
+}
+
+.task_list h1 {
+  padding: 16px 24px;
+  border-bottom: 2px solid white;
+}
+
+.task_list h3 {
+  max-height: 24px;
+  width: 100%;
+  padding: 4px 0;
+  border-top: 2px solid white;
+}
+
+ul::-webkit-scrollbar {
+  width: 6px;
+}
+ul::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: linear-gradient(180deg, #c9dcfa, white);;
+}
+
+li {
+  margin: 8px 0;
+  width: 90%;
+  padding: 4px;
+  border: 1px solid white;
+  border-radius: 10px;
 }
 
 .task {
@@ -12,22 +72,14 @@
   position: relative;
   min-height: 104px;
   width: 424px;
-  margin-top: 16px;
-  margin-right: 16px;
   padding: 30px;
-  border-color:white;
-  opacity: 0.60;
-  border-style:solid;
+  border: 4px solid white;
   border-radius: 10px;
-  border-width: 4px;
 }
-.task:hover {
-  opacity: 1;
-}
-div:hover span {
+section:hover span {
   opacity: 0.3;
 }
-div:hover span:hover {
+section:hover span:hover {
   opacity: 1;
 }
 input[type="checkbox"] {
@@ -51,12 +103,6 @@ input[type="checkbox"]:checked ~ .date.overdue_date {
   display: flex;
   justify-content: center;
   color:white;
-}
-.task_list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  width: 100%;
 }
 .status_button {
   margin-top: 16px;
