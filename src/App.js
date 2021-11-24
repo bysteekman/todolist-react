@@ -23,13 +23,13 @@ const App = () => {
   ])
 
   useEffect(() => {
-    return fetch("https://localhost:5001/api/Lists",)
+    return fetch("https://localhost:5001/api/Lists")
     .then(response => response.json())
     .then(res => setTodoLists(res));
   }, [])
 
   const addTask = (task) => {
-    setTasksList({...tasksList, task})
+    setTasksList([...tasksList, task])
   }
 
   return (
