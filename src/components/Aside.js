@@ -2,12 +2,17 @@ import React, { useState } from "react";
 import List from "./List";
 
 const Aside = (props) => {
+
+    const changeActiveList = event => {
+        console.log(event.target.id)
+    }
+
     return (
         <aside className="task_list">
             <h1>Todo Lists</h1>
             <ul>
                 {
-                    props.todoLists.map(list => <List key={list.id} todoList={list.title}/>)
+                    props.todoLists.map(list => <List key={list.id.toString()} todoList={list} onClick={changeActiveList} />)
                 }
             </ul>
             <h3>Get All Task</h3>

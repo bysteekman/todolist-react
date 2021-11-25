@@ -4,7 +4,6 @@ import './App.css';
 import Aside from './components/Aside';
 import Form from './components/Form';
 import TaskField from './components/TasksField';
-import TodoItem from './components/TodoItem';
 
 // const getLists = () => {
 //   return fetch("https://localhost:5001/api/Lists",)
