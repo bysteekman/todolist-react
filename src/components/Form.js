@@ -1,16 +1,6 @@
 import React from "react";
 import { useState } from "react/cjs/react.development";
 
-const createTask = (listId, task) => {
-    return fetch(`https://localhost:5001/api/lists/${listId}/tasks`, {
-        method: 'POST',
-        headers: {
-            'Content-type': 'application/json'
-        },
-        body: JSON.stringify(task)
-    })
-    .then(response => response.ok ? response.json() : alert('error'))
-}
 const Form = (props) => {
     const [form, setForm] = useState({
         title: '',
@@ -20,8 +10,8 @@ const Form = (props) => {
 
     const onSubmitHandler = event => {
         event.preventDefault();
-        createTask(props.listId, form)
-            .then(res => res != null ? props.onSubmit(res) : setForm([]));
+        props.onSubmit(form);
+        event.target.reset();
     }
 
     const onChange = (e) => {

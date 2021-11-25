@@ -8,16 +8,20 @@ const TodoItem = (props) => {
         setTask(props.item)
     }, [])
     
+    const deleteTask = () => {
+        
+    }
     return (
         <section className="task">
             <p>
+                <input type="checkbox" name="itemCheckbox" /> 
                 <em className="task_status">{task.title}</em>
                 <em className="date">{task.dueDate}</em>
             </p>
             <p className="task_description">
                 {task.description}
             </p>
-            <span></span>
+            <span onClick={deleteTask}></span>
         </section>
     )
 }

@@ -10,6 +10,18 @@ const getTasks = (id) => {
     .then(response => response.json())
 }
 
+const createTask = (listId, task) => {
+  return fetch(`https://localhost:5001/api/lists/${listId}/tasks`, {
+      method: 'POST',
+      headers: {
+          'Content-type': 'application/json'
+      },
+      body: JSON.stringify(task)
+  })
+  .then(res => res.json().then(res.ok ? res : (err) => Promise.reject(err)))
+}
+
+
 const App = () => {
 
   const [todoLists, setTodoLists] = useState([]);
@@ -29,9 +41,11 @@ const App = () => {
       .then(res => setTasksList(res))
       .then(setActiveList(id));
   }
+
   const addTask = (task) => {
-    console.log(task)
-    setTasksList([...tasksList, task])
+    createTask(activeList, task)
+      .then(res => setTasksList([...tasksList, res]))
+      .catch(error => alert(error.status + ' ' + error.title))
   }
 
   return (
@@ -39,7 +53,7 @@ const App = () => {
       <Aside todoLists={todoLists} onClick={getListTasks}/>
       <article>
         <TaskField tasksList={tasksList}/>
-        <Form listId={activeList} onSubmit={addTask}/>
+        <Form onSubmit={addTask}/>
       </article>
     </main>
   )
