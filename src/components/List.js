@@ -1,13 +1,18 @@
 import React from "react";
-import { useState } from "react/cjs/react.development";
+import { useEffect, useState } from "react/cjs/react.development";
 
 const List = (props) => {
-    // const [todoList, setTodoList] = useState([props.todoList])
-    const changeActiveList = event => {
-        return event.target.id;
+    const [todoList, setTodoList] = useState([]);
+
+    useEffect(() => {
+        setTodoList(props.todoList)
+    }, [])
+
+    const changeActiveList = () => {
+        props.onClick(todoList.id)
     }
     return (
-        <li id={props.todoList.id.toString()} onClick={changeActiveList}>{props.todoList.title}</li>
+        <li onClick={changeActiveList}>{todoList.title}</li>
     )
 }
 

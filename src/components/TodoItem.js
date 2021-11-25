@@ -1,14 +1,19 @@
 import React from "react";
+import { useEffect, useState } from "react/cjs/react.development";
 
 const TodoItem = (props) => {
+    const [task, setTask] = useState([])
+    useEffect(() => {
+        setTask(props.item)
+    }, [])
     return (
         <section className="task">
             <p>
-                <em className="task_status">{props.item.title}</em>
-                <em className="date">{props.item.dueDate}</em>
+                <em className="task_status">{task.title}</em>
+                <em className="date">{task.dueDate}</em>
             </p>
             <p className="task_description">
-                {props.item.description}
+                {task.description}
             </p>
             <span></span>
         </section>

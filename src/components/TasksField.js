@@ -5,7 +5,7 @@ const TaskField = (props) => {
     return (
         <section className="list_tasks">
           {
-              props.tasksList.map(task => <TodoItem key={task.id} item={task}/>)
+              props.tasksList.map(task => <TodoItem key={task.id.toString()} item={task}/>)
           }
         </section>
     )

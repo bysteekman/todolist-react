@@ -3,8 +3,8 @@ import List from "./List";
 
 const Aside = (props) => {
 
-    const changeActiveList = event => {
-        console.log(event.target.id)
+    const changeActiveList = id => {
+        props.onClick(id)
     }
 
     return (
