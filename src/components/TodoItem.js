@@ -8,13 +8,19 @@ const TodoItem = (props) => {
         setTask(props.item)
     }, [])
     
-    const deleteTask = () => {
-        
+    const changeStatus = () => {
+        task.done = task.done ? false : true;
+        props.onClick(['change', task.id, task.done]);
     }
+
+    const deleteTask = () => {
+        props.onClick(['delete', task.id])
+    }
+
     return (
         <section className="task">
             <p>
-                <input type="checkbox" name="itemCheckbox" /> 
+                <input type="checkbox" name="itemCheckbox" onClick={changeStatus}/> 
                 <em className="task_status">{task.title}</em>
                 <em className="date">{task.dueDate}</em>
             </p>
