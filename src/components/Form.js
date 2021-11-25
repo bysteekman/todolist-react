@@ -9,6 +9,7 @@ const createTask = (listId, task) => {
         },
         body: JSON.stringify(task)
     })
+    .then(response => response.ok ? response.json() : alert('error'))
 }
 const Form = (props) => {
     const [form, setForm] = useState({
@@ -20,7 +21,7 @@ const Form = (props) => {
     const onSubmitHandler = event => {
         event.preventDefault();
         createTask(props.listId, form)
-            .then(res => res.ok ? props.onSubmit(res.json()) : alert("Can't create task"))
+            .then(res => res != null ? props.onSubmit(res) : setForm([]));
     }
 
     const onChange = (e) => {

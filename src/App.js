@@ -30,6 +30,7 @@ const App = () => {
       .then(setActiveList(id));
   }
   const addTask = (task) => {
+    console.log(task)
     setTasksList([...tasksList, task])
   }
 

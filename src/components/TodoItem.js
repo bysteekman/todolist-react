@@ -3,9 +3,11 @@ import { useEffect, useState } from "react/cjs/react.development";
 
 const TodoItem = (props) => {
     const [task, setTask] = useState([])
+
     useEffect(() => {
         setTask(props.item)
     }, [])
+    
     return (
         <section className="task">
             <p>
