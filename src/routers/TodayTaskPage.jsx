@@ -21,6 +21,15 @@ const changeTaskStatus = (listId, id, done) => {
             'done': done
         })
     })
+    .then(res => res.ok ? res : (err) => Promise.reject(err))
+}
+
+const changeItem = (id) => item => {
+    if(item.id === id) {
+        item.done = !item.done;
+        return item
+    }
+    return item
 }
 
 const deleteElement = (id, object) => {
@@ -30,6 +39,7 @@ const deleteElement = (id, object) => {
 const TodayTaskPage = () => {
 
     const [tasksList, setTasksList] = useState([]);
+    const visibleTasks = tasksList.filter(i => !i.done);
 
     useEffect(() => {
         return fetch(`https://localhost:5001/api/collection/today`)
@@ -38,20 +48,21 @@ const TodayTaskPage = () => {
       }, [ ])
 
     
-    const taskChange = (value) => {
-        if(value[0] === 'delete') {
-          deleteTask(0, value[1]) //error here, change 0
-            .then(setTasksList(deleteElement(value[1], tasksList)))
+    const onDelete = (id, listId) => {
+        deleteTask(listId, id)
+            .then(setTasksList(deleteElement(id, tasksList)))
             .catch(error => alert(error.status + ' ' + error.title))
-        }
-        // if(value[0] === 'change') {
-        //   changeTaskStatus(activeList, value[1], value[2])
-        // }
+    }
+
+    const onUpdate = (id, done, listId) => {
+        changeTaskStatus(listId, id, done)
+            .then(setTasksList(tasksList.map(changeItem(id))))
+            .catch(error => alert(error.status + ' ' + error.title))
     }
 
     return (
         <article>
-            <CollectionToday tasksList={tasksList} onClick={taskChange}/>
+            <CollectionToday tasksList={visibleTasks} onChange={onUpdate} onClick={onDelete}/>
         </article>
     )
 }

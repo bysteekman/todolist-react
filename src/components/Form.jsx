@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react/cjs/react.development";
 
 const Form = (props) => {
+    
     const [form, setForm] = useState({
         title: '',
         description: '',
@@ -17,7 +18,6 @@ const Form = (props) => {
     const onChange = (e) => {
         form[e.target.name] = e.target.value
     }
-
 
     
     return (

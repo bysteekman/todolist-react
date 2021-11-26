@@ -28,19 +28,30 @@ const changeTaskStatus = (listId, id, done) => {
             'Content-type': 'application/json'
         },
         body: JSON.stringify({
-            'done': done
+            "done": done
         })
     })
+    .then(res => res.ok ? res : (err) => Promise.reject(err))
 }
 
 const deleteElement = (id, object) => {
     return object.filter(item => item.id !== id);
 }
 
-const TodoListPage = () => {
-    let { id } = useParams();
+const changeItem = (id) => item => {
+    if(item.id === id) {
+        item.done = !item.done;
+        return item
+    }
+    return item
+}
 
+const TodoListPage = () => {
+
+    const { id } = useParams();
+    
     const [tasksList, setTasksList] = useState([]);
+    const [showDone, setDone] = useState(false);
 
     useEffect(() => {
         return fetch(`https://localhost:5001/api/lists/${id}/tasks?all=true`)
@@ -55,21 +66,29 @@ const TodoListPage = () => {
           .catch(error => alert(error.status + ' ' + error.title))
         
     }
+
+    const visibleTasks = showDone ? tasksList : tasksList.filter(i => !i.done);
     
-    const taskChange = (value) => {
-        if(value[0] === 'delete') {
-          deleteTask(id, value[1])
-            .then(setTasksList(deleteElement(value[1], tasksList)))
+    const onDelete = (itemId) => {
+        deleteTask(id, itemId)
+            .then(setTasksList(deleteElement(itemId, tasksList)))
             .catch(error => alert(error.status + ' ' + error.title))
-        }
-        // if(value[0] === 'change') {
-        //   changeTaskStatus(activeList, value[1], value[2])
-        // }
+    }
+
+    const onUpdate = (itemId, done) => {
+        changeTaskStatus(id, itemId, done)
+            .then(setTasksList(tasksList.map(changeItem(itemId))))
+            .catch(error => alert(error.status + ' ' + error.title))
+    }
+
+    const changeDone = (event) => {
+        setDone(event.target.checked);
     }
 
     return (
         <article>
-            <TaskField tasksList={tasksList} onClick={taskChange}/>
+            <p className="state"><input type="checkbox" name="statusCheckbox" onChange={changeDone}/>Get All Tasks</p>
+            <TaskField taskList={visibleTasks} onChange={onUpdate} onClick={onDelete}/>
             <Form onSubmit={addTask}/>
         </article>
     )

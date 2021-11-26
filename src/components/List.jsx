@@ -1,19 +1,12 @@
 import React from "react";
-import { useEffect, useState } from "react/cjs/react.development";
-import { Link } from "react-router-dom";
+import { useState } from "react/cjs/react.development";
+import { NavLink } from "react-router-dom";
 
 const List = (props) => {
-    const [todoList, setTodoList] = useState([]);
+    const [todoList, setTodoList] = useState(props.todoList);
 
-    useEffect(() => {
-        setTodoList(props.todoList)
-    }, [])
-
-    // const changeActiveList = () => {
-    //     props.onClick(todoList.id)
-    // }
     return (
-        <li><Link to={`/todo-list/${todoList.id}`}>{todoList.title} ({todoList.notCompletedTasksCount})</Link></li>
+        <li><NavLink to={`/todo-list/${todoList.id}`}>{todoList.title} ({todoList.notCompletedTasksCount})</NavLink></li>
     )
 }
 

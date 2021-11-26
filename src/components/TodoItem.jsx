@@ -1,26 +1,25 @@
 import React from "react";
-import { useEffect, useState } from "react/cjs/react.development";
+import { useState } from "react/cjs/react.development";
 
 const TodoItem = (props) => {
-    const [task, setTask] = useState([])
-
-    useEffect(() => {
-        setTask(props.item)
-    }, [])
+    const [task, setTask] = useState(props.item)
     
     const changeStatus = () => {
-        task.done = task.done ? false : true;
-        props.onClick(['change', task.id, task.done]);
+        let newDone = !task.done;
+        setTask({...task, done: newDone})
+        props.onChange(task.id, newDone);
     }
 
     const deleteTask = () => {
-        props.onClick(['delete', task.id])
+        props.onClick(task.id)
     }
+
+    const taskStatus = task.done;
 
     return (
         <section className="task">
             <p>
-                <input type="checkbox" name="itemCheckbox" onClick={changeStatus}/> 
+                <input type="checkbox" name="itemCheckbox" onChange={changeStatus} defaultChecked={taskStatus}/> 
                 <em className="task_status">{task.title}</em>
                 <em className="date">{task.dueDate}</em>
             </p>
