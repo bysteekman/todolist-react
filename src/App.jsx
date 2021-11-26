@@ -3,8 +3,10 @@ import { Route, Routes } from 'react-router';
 import './App.css';
 
 import Aside from './components/Aside';
+import CollectionToday from './components/CollectionToday';
 import Form from './components/Form';
 import TaskField from './components/TasksField';
+import TodayTaskPage from './routers/TodayTaskPage';
 import TodoListPage from './routers/TodoListPage';
 
 
@@ -23,7 +25,7 @@ const App = () => {
       <Aside todoLists={todoLists}/>
         <Routes>
           <Route path="/todo-list/:id" element={<TodoListPage />} />
-          {/* <Route path="/today" element={<TaskField tasksList={tasksList} onClick={taskChange}/>} /> */}
+          <Route path="/today" element={<TodayTaskPage />} />
         </Routes>
         {/* <Form onSubmit={addTask}/> */}
     </main>

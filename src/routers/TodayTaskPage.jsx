@@ -1,19 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import CollectionToday from "../components/CollectionToday";
 import Form from "../components/Form";
 import TaskField from "../components/TasksField";
 
-const createTask = (listId, task) => {
-    return fetch(`https://localhost:5001/api/lists/${listId}/tasks`, {
-        method: 'POST',
-        headers: {
-            'Content-type': 'application/json'
-        },
-        body: JSON.stringify(task)
-    })
-    .then(res => res.json().then(res.ok ? res : (err) => Promise.reject(err)))
-  }
-  
 const deleteTask = (listId, id) => {
     return fetch(`https://localhost:5001/api/lists/${listId}/tasks/${id}`, {
             method: 'DELETE'
@@ -37,28 +27,20 @@ const deleteElement = (id, object) => {
     return object.filter(item => item.id !== id);
 }
 
-const TodoListPage = () => {
-    let { id } = useParams();
+const TodayTaskPage = () => {
 
     const [tasksList, setTasksList] = useState([]);
 
     useEffect(() => {
-        return fetch(`https://localhost:5001/api/lists/${id}/tasks?all=true`)
+        return fetch(`https://localhost:5001/api/collection/today`)
         .then(response => response.json())
         .then(res => setTasksList(res));
-      }, [id])
+      }, [ ])
 
-
-    const addTask = (task) => {
-        createTask(id, task)
-          .then(res => setTasksList([...tasksList, res]))
-          .catch(error => alert(error.status + ' ' + error.title))
-        
-    }
     
     const taskChange = (value) => {
         if(value[0] === 'delete') {
-          deleteTask(id, value[1])
+          deleteTask(0, value[1]) //error here, change 0
             .then(setTasksList(deleteElement(value[1], tasksList)))
             .catch(error => alert(error.status + ' ' + error.title))
         }
@@ -69,10 +51,9 @@ const TodoListPage = () => {
 
     return (
         <article>
-            <TaskField tasksList={tasksList} onClick={taskChange}/>
-            <Form onSubmit={addTask}/>
+            <CollectionToday tasksList={tasksList} onClick={taskChange}/>
         </article>
     )
 }
 
-export default TodoListPage;
+export default TodayTaskPage;
