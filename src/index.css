@@ -18,6 +18,11 @@ ul {
   overflow-y:scroll;
 }
 
+a:active, a:hover, a {
+  text-decoration: none;
+  color: white;
+}
+
 body, #root {
   display: flex;
   flex-direction: column;

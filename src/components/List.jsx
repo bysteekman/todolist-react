@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react/cjs/react.development";
+import { Link } from "react-router-dom";
 
 const List = (props) => {
     const [todoList, setTodoList] = useState([]);
@@ -8,11 +9,11 @@ const List = (props) => {
         setTodoList(props.todoList)
     }, [])
 
-    const changeActiveList = () => {
-        props.onClick(todoList.id)
-    }
+    // const changeActiveList = () => {
+    //     props.onClick(todoList.id)
+    // }
     return (
-        <li onClick={changeActiveList}>{todoList.title}</li>
+        <li><Link to={`/todo-list/${todoList.id}`}>{todoList.title} ({todoList.notCompletedTasksCount})</Link></li>
     )
 }
 
