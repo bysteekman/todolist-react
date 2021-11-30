@@ -1,18 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react/cjs/react.development";
+import { useState } from "react/cjs/react.development";
 
 const CollectionItem = (props) => {
     const [task, setTask] = useState(props.item)
+    let today = new Date();
+    const validDate = task.dueDate != null ? new Date(task.dueDate) : '';
+    const corrDateOutput = typeof validDate !== 'string' ? `${validDate.getMonth()}.${validDate.getDate()}` : '';
+    const expiredDate = (typeof validDate !== 'string' && validDate < today.setDate(today.getDate()-1)) ? 'expired' : '';
 
     const changeStatus = () => {
         let newDone = !task.done;
         setTask({...task, done: newDone})
-        props.onChange(task.id, newDone, task.list.id);
+        props.onUpdate(task.id, newDone, task.list.id);
     }
 
     const deleteTask = () => {
-        props.onClick(task.id, task.list.id)
+        props.onDelete(task.id, task.list.id)
     }
 
     return (
@@ -20,7 +24,7 @@ const CollectionItem = (props) => {
             <p>
                 <input type="checkbox" name="itemCheckbox" onChange={changeStatus}/> 
                 <em className="task_status">{task.title}</em>
-                <em className="date">{task.dueDate}</em>
+                <em className={`date ${expiredDate}`}>{corrDateOutput}</em>
             </p>
             <p className="task_description">
                 {task.description}

@@ -2,21 +2,19 @@ import React from "react";
 import { useState } from "react/cjs/react.development";
 
 const Form = (props) => {
-    
-    const [form, setForm] = useState({
-        title: '',
-        description: '',
-        dueDate: ''
-    })
+
+    const [form, setForm] = useState({})
 
     const onSubmitHandler = event => {
         event.preventDefault();
         props.onSubmit(form);
+        setForm({});
         event.target.reset();
     }
 
     const onChange = (e) => {
-        form[e.target.name] = e.target.value
+        let name = e.target.name;
+        setForm({...form, [name]: e.target.value})
     }
 
     

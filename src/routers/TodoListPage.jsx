@@ -56,7 +56,7 @@ const TodoListPage = () => {
     useEffect(() => {
         return fetch(`https://localhost:5001/api/lists/${id}/tasks?all=true`)
         .then(response => response.json())
-        .then(res => setTasksList(res));
+        .then(setTasksList);
       }, [id])
 
 
@@ -88,7 +88,7 @@ const TodoListPage = () => {
     return (
         <article>
             <p className="state"><input type="checkbox" name="statusCheckbox" onChange={changeDone}/>Get All Tasks</p>
-            <TaskField taskList={visibleTasks} onChange={onUpdate} onClick={onDelete}/>
+            <TaskField taskList={visibleTasks} onChange={onUpdate} onDelete={onDelete}/>
             <Form onSubmit={addTask}/>
         </article>
     )

@@ -6,7 +6,7 @@ const List = (props) => {
     const [todoList, setTodoList] = useState(props.todoList);
 
     return (
-        <li><NavLink to={`/todo-list/${todoList.id}`}>{todoList.title} ({todoList.notCompletedTasksCount})</NavLink></li>
+        <li><NavLink to={`/todo-list/${todoList.id}`}>{todoList.title} ({props.count})</NavLink></li>
     )
 }
 

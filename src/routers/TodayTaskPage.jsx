@@ -62,7 +62,7 @@ const TodayTaskPage = () => {
 
     return (
         <article>
-            <CollectionToday tasksList={visibleTasks} onChange={onUpdate} onClick={onDelete}/>
+            <CollectionToday tasksList={visibleTasks} onUpdate={onUpdate} onDelete={onDelete}/>
         </article>
     )
 }

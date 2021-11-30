@@ -4,19 +4,16 @@ import List from "./List";
 
 const Aside = (props) => {
 
-    const changeActiveList = id => {
-        props.onClick(id)
-    }
+    const getTasksCountById = (id) => Object.values(props.listsCount.find(l=> l[id]))
 
     return (
         <aside className="task_list">
             <h1><Link to="today">Todo Lists</Link></h1>
             <ul>
                 {
-                    props.todoLists.map(list => <List key={list.id.toString()} todoList={list} onClick={changeActiveList} />)
+                    props.todoLists.map(list => <List key={list.id.toString()} todoList={list} count={getTasksCountById(list.id)}/>)
                 }
             </ul>
-            <h3>Get All Task</h3>
         </aside>
     )
 }
