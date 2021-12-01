@@ -11,7 +11,6 @@ import useActionCreator from './ActionCreator';
 
 const App = () => {
   useActionCreator(loadDashboard);
-
   return (
     <main>
       <Aside/>

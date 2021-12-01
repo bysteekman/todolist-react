@@ -1,68 +1,28 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router";
+import useActionCreator from "../ActionCreator";
 import CollectionToday from "../components/CollectionToday";
 import Form from "../components/Form";
 import TaskField from "../components/TasksField";
-
-const deleteTask = (listId, id) => {
-    return fetch(`https://localhost:5001/api/lists/${listId}/tasks/${id}`, {
-            method: 'DELETE'
-        })
-        .then(res => res.ok ? res : (err) => Promise.reject(err))
-}
-
-const changeTaskStatus = (listId, id, done) => {
-    return fetch(`https://localhost:5001/api/lists/${listId}/tasks/${id}`, {
-        method: 'PATCH',
-        headers: {
-            'Content-type': 'application/json'
-        },
-        body: JSON.stringify({
-            'done': done
-        })
-    })
-    .then(res => res.ok ? res : (err) => Promise.reject(err))
-}
-
-const changeItem = (id) => item => {
-    if(item.id === id) {
-        item.done = !item.done;
-        return item
-    }
-    return item
-}
-
-const deleteElement = (id, object) => {
-    return object.filter(item => item.id !== id);
-}
+import { taskApi } from "../requests";
+import { loadCollectionToday } from "../store/collection/action";
 
 const TodayTaskPage = () => {
 
-    const [tasksList, setTasksList] = useState([]);
-    const visibleTasks = tasksList.filter(i => !i.done);
+    const tasksList = useSelector(state => state.collectionToday);
+    const loadToday = useActionCreator(loadCollectionToday)
 
     useEffect(() => {
-        return fetch(`https://localhost:5001/api/collection/today`)
-        .then(response => response.json())
-        .then(res => setTasksList(res));
-      }, [ ])
+        return loadToday;
+    }, [])
 
-    
-    const onDelete = (id, listId) => {
-        deleteTask(listId, id)
-            .then(setTasksList(deleteElement(id, tasksList)))
-            .catch(error => alert(error.status + ' ' + error.title))
-    }
+    const visibleTasks = tasksList.filter(i => !i.done);
 
-    const onUpdate = (id, done, listId) => {
-        changeTaskStatus(listId, id, done)
-            .then(setTasksList(tasksList.map(changeItem(id))))
-            .catch(error => alert(error.status + ' ' + error.title))
-    }
 
     return (
         <article>
-            <CollectionToday tasksList={visibleTasks} onUpdate={onUpdate} onDelete={onDelete}/>
+            <CollectionToday tasksList={visibleTasks}/>
         </article>
     )
 }

@@ -1,23 +1,25 @@
 import React from "react";
 import { useState } from "react/cjs/react.development";
+import useActionCreator from "../ActionCreator";
+import { updateTask } from "../store/tasks/actions";
 
 const TodoItem = (props) => {
-    const [task, setTask] = useState(props.item)
-    let today = new Date()
+    const task = props.item;
+
+    let today = new Date();
+
     const validDate = task.dueDate != null ? new Date(task.dueDate) : '';
     const corrDateOutput = typeof validDate !== 'string' ? `${validDate.getMonth()}.${validDate.getDate()}` : '';
     const expiredDate = (typeof validDate !== 'string' && validDate < today.setDate(today.getDate()-1)) ? 'expired' : '';
     
     const changeStatus = () => {
-        let newDone = !task.done;
-        setTask({...task, done: newDone})
-        props.onChange(task.id, newDone);
+        task.done = !task.done
+        props.onUpdate(task)
     }
 
     const deleteTask = () => {
-        props.onDelete(task.id)
+        props.onDelete(task)
     }
-
     
     const taskStatus = task.done;
 
