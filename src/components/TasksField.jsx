@@ -1,20 +1,19 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { useState } from "react/cjs/react.development";
 import TodoItem from "./TodoItem";
+import { RootStateOrAny } from "react-redux";
 
 const TaskField = (props) => {
+    const tasksList = useSelector(state =>  state.tasks[props.id] ? state.tasks[props.id] : []);
 
-    const onDelete = id => {
-        props.onDelete(id);
-    }
-
-    const onUpdate = (id, done) => {
-        props.onChange(id, done)
-    }
+    // const output = useSelector(state => console.log(state.tasks))
+    const visibleTasks = props.done ? tasksList : tasksList.filter(i => !i.done);
 
     return (
         <section className="list_tasks">
           {
-              props.taskList.map(task => <TodoItem key={task.id.toString()} item={task} onChange={onUpdate} onDelete={onDelete}/>)
+              visibleTasks.map(task => <TodoItem key={task.id.toString()} item={task} />)
           }
         </section>
     )
