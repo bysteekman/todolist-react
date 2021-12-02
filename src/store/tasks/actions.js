@@ -25,7 +25,7 @@ export const updateTask = (listId, task) => {
 
 export const deleteTask = (listId, task) => {
     return taskApi.deleteTask(listId, task.id)
-        .then(res => {return {
+        .then(_ => {return {
             type: TASK_DELETE,
             listId,
             task

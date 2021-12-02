@@ -1,22 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useState } from "react/cjs/react.development";
 
 const CollectionItem = (props) => {
-    const [task, setTask] = useState(props.item)
+    const task = props.item;
+
     let today = new Date();
     const validDate = task.dueDate != null ? new Date(task.dueDate) : '';
     const corrDateOutput = typeof validDate !== 'string' ? `${validDate.getMonth()}.${validDate.getDate()}` : '';
     const expiredDate = (typeof validDate !== 'string' && validDate < today.setDate(today.getDate()-1)) ? 'expired' : '';
 
     const changeStatus = () => {
-        let newDone = !task.done;
-        setTask({...task, done: newDone})
-        props.onUpdate(task.id, newDone, task.list.id);
+        task.done = !task.done;
+        props.onUpdate(task.list.id, {id: task.id, done: task.done});
     }
 
     const deleteTask = () => {
-        props.onDelete(task.id, task.list.id)
+        props.onDelete(task.list.id, {id: task.id, done: task.done})
     }
 
     return (

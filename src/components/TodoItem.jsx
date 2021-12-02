@@ -1,7 +1,4 @@
 import React from "react";
-import { useState } from "react/cjs/react.development";
-import useActionCreator from "../ActionCreator";
-import { updateTask } from "../store/tasks/actions";
 
 const TodoItem = (props) => {
     const task = props.item;
