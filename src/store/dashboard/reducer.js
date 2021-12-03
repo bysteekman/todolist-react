@@ -2,7 +2,8 @@ import { combineReducers } from 'redux'
 import { COLLECTION_TASK_DELETE, COLLECTION_TASK_UPDATE } from '../collection/action';
 import { TASK_CREATE, TASK_DELETE, TASK_STATUS_UPDATED } from '../tasks/actions'
 
-import { DASHBOARD_LOADED} from './actions'
+import { DASHBOARD_LOADED, validDate} from './actions'
+
 
 function openedTasksReducer(state = {}, action) {
     switch(action.type) {
@@ -36,14 +37,20 @@ function todayReducer(state = 0, action) {
         case DASHBOARD_LOADED:
             return action.payload.tasksCountForToday
 
-        case TASK_STATUS_UPDATED, COLLECTION_TASK_UPDATE:
-            return state += (!action.task.done - action.task.done)
+        case TASK_STATUS_UPDATED:
+            return validDate(action.task.dueDate) ? state += (!action.task.done - action.task.done) : state
 
-        case TASK_DELETE, COLLECTION_TASK_DELETE:
-            return action.task.done ? state : --state
+        case TASK_DELETE:
+            return action.task.done ? state : (validDate(action.task.dueDate) ? --state : state)
         
         case TASK_CREATE:
-            return ++state
+            return validDate(action.task.dueDate) ? ++state : state
+        
+        case COLLECTION_TASK_UPDATE:
+            return state += (!action.task.done - action.task.done)
+
+        case COLLECTION_TASK_DELETE:
+            return action.task.done ? state : --state
 
         default: return state
     }

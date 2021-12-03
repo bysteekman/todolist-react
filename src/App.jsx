@@ -10,7 +10,11 @@ import useActionCreator from './ActionCreator';
 
 
 const App = () => {
-  useActionCreator(loadDashboard);
+  const dashboardLoading = useActionCreator(loadDashboard);
+  
+  useEffect(() => {
+    dashboardLoading()
+  }, [])
   return (
     <main>
       <Aside/>

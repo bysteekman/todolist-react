@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useActionCreator from "../ActionCreator";
 import CollectionToday from "../components/CollectionToday";
 import { deleteCollectionItem, loadCollectionToday, updateCollectionItem } from "../store/collection/action";
@@ -14,7 +14,7 @@ const TodayTaskPage = () => {
     const updateItem = useActionCreator(updateCollectionItem);
 
     useEffect(() => {
-        return loadToday
+        loadToday()
     }, [])
 
     const deleteTodoItem = (listId, task) => {

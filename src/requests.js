@@ -2,11 +2,11 @@
 export const taskApi = {
     getDashboard() {
         return fetch('https://localhost:5001/api/Dashboard')
-            .then(res => res.json())
+            .then(res => res.json().then(res.ok ? res : (err) => Promise.reject(err)))
     },
     getTasksByListId(listId) {
         return fetch(`https://localhost:5001/api/lists/${listId}/tasks?all=true`)
-        .then(res => res.json())
+        .then(res => res.json().then(res.ok ? res : (err) => Promise.reject(err)))
     },
     deleteTask(listId, id) {
         return fetch(`https://localhost:5001/api/lists/${listId}/tasks/${id}`, { method: 'DELETE' })
@@ -36,6 +36,6 @@ export const taskApi = {
     },
     getCollectionToday() {
         return fetch(`https://localhost:5001/api/collection/today`)
-            .then(response => response.json())
+            .then(res => res.json().then(res.ok ? res : (err) => Promise.reject(err)))
     }
 }

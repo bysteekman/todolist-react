@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import useActionCreator from "../ActionCreator";
-import Form from "../components/Form";
+import InputForm from "../components/Form";
 import TaskField from "../components/TasksField";
 import { createTask, loadTasks } from "../store/tasks/actions"
 
@@ -10,12 +10,12 @@ const TodoListPage = () => {
 
     const listId = useParams().id;
     
-    const loadTasksById = useActionCreator(loadTasks)(listId);
+    const loadTasksById = useActionCreator(loadTasks);
     const [showDone, setDone] = useState(false);
     const createItem = useActionCreator(createTask);
     
     useEffect(() => {
-        return loadTasksById
+        loadTasksById(listId)
     }, [listId])
     
     const changeDone = (event) => {
@@ -29,7 +29,7 @@ const TodoListPage = () => {
         <article>
             <p className="state"><input type="checkbox" name="statusCheckbox" onChange={changeDone}/>Get All Tasks</p>
             <TaskField id={listId} done={showDone} />
-            <Form onSubmit={addTask}/>
+            <InputForm onSubmit={addTask}/>
         </article>
     )
 }
