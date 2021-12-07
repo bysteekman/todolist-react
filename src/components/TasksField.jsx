@@ -9,18 +9,14 @@ import { deleteTask, updateTask } from "../store/tasks/actions";
 const TaskField = (props) => {
     const tasksList = useSelector(state =>  state.tasks[props.id] ? state.tasks[props.id] : []);
 
-    const deleteItem = useActionCreator(deleteTask);
-    const updateItem = useActionCreator(updateTask);
-
     const deleteTodoItem = (task) => {
-        deleteItem(props.id, task)
+        props.onDelete(task)
     }
 
     const changeStatus = (task) => {
-        updateItem(props.id, task)
+        props.onUpdate(task)
     }
 
-    // const output = useSelector(state => console.log(state.tasks))
     const visibleTasks = props.done ? tasksList : tasksList.filter(i => !i.done);
 
     return (

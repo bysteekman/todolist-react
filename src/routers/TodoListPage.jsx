@@ -4,15 +4,25 @@ import { useParams } from "react-router";
 import useActionCreator from "../ActionCreator";
 import InputForm from "../components/Form";
 import TaskField from "../components/TasksField";
-import { createTask, loadTasks } from "../store/tasks/actions"
+import { createTask, deleteTask, loadTasks, updateTask } from "../store/tasks/actions"
 
 const TodoListPage = () => {
 
     const listId = useParams().id;
+    const [showDone, setDone] = useState(false);
     
     const loadTasksById = useActionCreator(loadTasks);
-    const [showDone, setDone] = useState(false);
     const createItem = useActionCreator(createTask);
+    const deleteItem = useActionCreator(deleteTask);
+    const updateItem = useActionCreator(updateTask);
+
+    const deleteTodoItem = (task) => {
+        deleteItem(listId, task)
+    }
+
+    const changeStatus = (task) => {
+        updateItem(listId, task)
+    }
     
     useEffect(() => {
         loadTasksById(listId)
@@ -28,7 +38,7 @@ const TodoListPage = () => {
     return (
         <article>
             <p className="state"><input type="checkbox" name="statusCheckbox" onChange={changeDone}/>Get All Tasks</p>
-            <TaskField id={listId} done={showDone} />
+            <TaskField id={listId} done={showDone} onUpdate={changeStatus} onDelete={deleteTodoItem}/>
             <InputForm onSubmit={addTask}/>
         </article>
     )

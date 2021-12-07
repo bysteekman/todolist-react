@@ -14,5 +14,6 @@ export const loadDashboard = () => dispatch => {
 }
 
 export const validDate = (date) => {
-    return date < dateNow.setDate(dateNow.getDate()-1)
+    let correctFormatDate = new Date(date)
+    return correctFormatDate < dateNow.setDate(dateNow.getDate()+1)
 }

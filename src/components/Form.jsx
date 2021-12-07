@@ -5,32 +5,37 @@ import * as yup from 'yup';
 const InputForm = (props) => {
 
     const validationSchema = yup.object().shape({
-        title: yup.string(),
-        description: yup.string(),
-        dueDate: yup.date().default(_ => {
-            let now = new Date();
-            now.setMonth(now.getMonth() + 1);
-            return now;})
+        title: yup.string()
+            .min(4, 'Min title length 4 characters')
+            .required('Required field'),
+        description: yup.string()
+            .min(5, 'Min description length 5 characters'),
+        dueDate: yup.date()
     })
-
-    const onSubmitHandler = values => e => {
-        e.preventDefault();
-        props.onSubmit(values);
-        e.target.reset();
-    }
 
     return (
         <Formik 
             initialValues={{ title: "", description: "", dueDate: "" }}
-            validation={validationSchema}
-            onSubmit={onSubmitHandler}
+            validationSchema={validationSchema}
+            onSubmit={(values, {resetForm}) => {
+                props.onSubmit(values);
+                resetForm()
+            }}
         >
-            <Form>
-                <Field type="text" value={values.title} onChange={handleChange} name="title" placeholder="task name" required/>
-                <Field type="text" value={values.description} onChange={handleChange} name="description" placeholder="description"/>
-                <Field type="date" value={values.dueDate} onChange={handleChange} name="dueDate" placeholder="deadline" min="2021-01-01" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"/>
-                <button type="submit">Add Task</button>
-            </Form>
+            {({ errors, touched }) => (
+                <Form>
+                    <div className="input-part">
+                        <Field type="text" name="title" placeholder="task name" />
+                        {errors.title && touched.title ? (<p className="inputError">{errors.title}</p>) : null}
+                    </div>
+                    <div className="input-part">
+                        <Field type="text" name="description" placeholder="description"/>
+                        {errors.description && touched.description ? (<p className="inputError">{errors.description}</p>) : null}
+                    </div>
+                    <Field type="date" name="dueDate" placeholder="deadline" min="2021-01-01" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"/>
+                    <button type="submit">Add Task</button>
+                </Form>
+            )}
         </Formik>
     )
 }
